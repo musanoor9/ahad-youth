@@ -1,0 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.cotainer img {
+  height: 40%;
+  width: 40%;
+}

@@ -1,0 +1,357 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+body {
+  width: 120%;
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(135deg, #1c1c1c 0%, #2a2a2a 50%, #1c1c1c 100%);
+}
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  overflow-x: hidden;
+}
+.nav-bar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: absolute; /* Corner positioning */
+  top: 30px; /* Distance from top */
+  left: 30px; /* Distance from left */
+  object-fit: cover;
+  box-shadow: 0 0 40px rgba(177, 177, 17, 0.8);
+}
+.nav-bar img:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgb(234, 255, 0);
+}
+.nav-bar h1 {
+  color: red;
+  margin: 5% 12%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav-bar h2 {
+  color: white;
+  margin: -5% 14%;
+  font-family: sans-serif;
+}
+
+nav {
+  margin: 1% 50%;
+  width: 60%;
+  height: 50%;
+  cursor: pointer;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  display: flex;
+}
+
+nav li {
+  margin-right: 50px;
+  color: #00ffe0;
+  font-size: 30px;
+  font-family: "Exo 2", sans-serif;
+}
+
+nav ul li {
+  display: block;
+}
+
+video {
+  width: 100%; /* apni width set karo */
+  height: 450px; /* apni height set karo */
+  border-radius: 15px; /* corners round karne ke liye */
+  object-fit: cover; /* video ko box ke andar fit karega */
+  display: block;
+  margin: 20px auto; /* center mein lane ke liye */
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  position: relative;
+  margin: 5% 0;
+}
+
+.about p {
+  color: white;
+  font-size: 18px;
+  margin: 2% 1%;
+  border: 2px solid green;
+  padding: 1%;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgb(121, 6, 79);
+}
+.about h1 {
+  color: blue;
+  font-size: 30px;
+  margin: 2% 2%;
+}
+
+.work p {
+  color: white;
+  margin: 2% 2%;
+}
+
+.work h1 {
+  color: blue;
+  margin: 0 2%;
+}
+
+.work-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid #00ffe0; /* Neon border */
+  border-radius: 20px;
+  width: 300px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 255, 224, 0.7);
+  transition: transform 0.3s, box-shadow 0.3s;
+  margin: 4% 2%;
+}
+
+.work-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgba(0, 255, 224, 1);
+}
+
+.work-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.work-card h2 {
+  font-family: "Audiowide", cursive; /* Neon style font */
+  color: #00ffe0;
+  text-shadow: 0 0 10px #00ffe0;
+  margin-bottom: 10px;
+}
+
+.work-card p {
+  font-family: "Exo 2", sans-serif;
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.view-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 25px;
+  background: #00ffe0;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.view-btn:hover {
+  background: #00bfa5;
+  color: white;
+}
+
+.mosque .video-container {
+  margin: -10% 1%;
+}
+.mosque h1 {
+  color: blue;
+  margin: 22% 2%;
+}
+.video-container video {
+  height: 50%;
+  width: 50%;
+  margin: -20% 1%;
+  border: 2px solid white;
+  width: 320px;
+  height: 200px;
+  border-radius: 15px;
+  border: 3px solid #00ffe0;
+  box-shadow: 0 0 15px #00ffe0;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  margin-bottom: 1%;
+}
+.gallery-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px;
+  gap: 20px;
+}
+
+.gallery-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gallery images */
+.gallery-container img {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid #00ffe0;
+  box-shadow: 0 0 15px #00ffe0;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.gallery-container img:hover {
+  transform: scale(1.05);
+}
+
+.members h1 {
+  color: blue;
+  margin: 30% 4%;
+  font-size: 30px;
+  position: absolute;
+}
+
+.members img {
+  width: 20%;
+  height: 20%;
+  border-radius: 150px;
+  border: 3px solid green;
+}
+.members {
+  display: flex;
+  object-fit: cover;
+  margin: -15% 0;
+}
+
+.names {
+  display: flex; /* flex parent */
+  flex-wrap: wrap; /* wrap if many images */
+  justify-content: center; /* center align images horizontally */
+  margin: 36% 1%; /* spacing from top and bottom */
+  gap: 20px; /* spacing between images */
+}
+
+.names img {
+  width: 150px; /* fixed width for images */
+  height: auto;
+  object-fit: cover; /* maintain aspect ratio */
+  border-radius: 50%;
+  margin: 0 4%;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.names h2 {
+  color: gold;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.name-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.member img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+.members img:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 40px rgb(0, 255, 21);
+}
+
+footer {
+  background: linear-gradient(135deg, #000000, #0b0b0b, #111);
+  color: #00ffcc;
+  padding: 40px 0 10px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  border-top: 1px solid #00ffcc;
+  box-shadow: 0 0 30px #00ffcc33;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.footer-about,
+.footer-links,
+.footer-contact {
+  width: 250px;
+  text-align: left;
+}
+
+.footer-about h2 {
+  color: #00ffc3;
+  text-shadow: 0 0 15px #00ffcc;
+
+}
+.footer-about p {
+  color: white;
+}
+
+.footer-links h3,
+.footer-contact h3 {
+  color: #00ffc3;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #00ffcc;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin: 8px 0;
+}
+
+.footer-links ul li a {
+  text-decoration: none;
+  color: #aaa;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #00ffcc;
+}
+
+.footer-contact p {
+  margin: 6px 0;
+  color: #ccc;
+}
+
+.footer-bottom {
+  border-top: 1px solid #00ffcc44;
+  margin-top: 20px;
+  padding-top: 10px;
+  font-size: 14px;
+  color: #999;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-about,
+  .footer-links,
+  .footer-contact {
+    width: 90%;
+  }
+}

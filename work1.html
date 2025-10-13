@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Details</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: #1c1c1c;
+        color: white;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid #00ffe0;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(0, 255, 224, 0.7);
+      }
+
+      h1 {
+        font-family: "Audiowide", cursive;
+        color: #00ffe0;
+        text-shadow: 0 0 10px #00ffe0;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .project-date {
+        font-family: "Exo 2", sans-serif;
+        color: #ff00ff; /* Neon pink for date */
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px #ff00ff;
+      }
+
+      .images {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        margin-bottom: 20px;
+      }
+
+      .images::-webkit-scrollbar {
+        display: none;
+      }
+
+      .images img {
+        width: 250px;
+        height: 450px;
+        object-fit: cover;
+        border-radius: 15px;
+        border: 2px solid #00ffe0;
+        box-shadow: 0 0 15px #00ffe0;
+        flex-shrink: 0;
+        transition: transform 0.3s;
+        padding: 0 1%;
+      }
+
+      .images img:hover {
+        transform: scale(1.05);
+      }
+
+      .description {
+        font-family: "Exo 2", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #ccc;
+      }
+      .before {
+        position: absolute;
+        margin: -15% 25%;
+      }
+      .before h1 {
+        color: white;
+      }
+      .after {
+        margin: -14% 65%;
+      }
+      .after h1 {
+        color: rgb(255, 255, 255);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Minar Lighting</h1>
+      <div class="project-date">Date: 22 February 2025</div>
+
+      <div class="images">
+        <img src="memebers img/work 1.jpeg" alt="Project Image 1" />
+        <img src="memebers img/work 2.jpeg" alt="Project Image 2" />
+        <img src="memebers img/work 3.jpeg" alt="Project Image 3" />
+      </div>
+
+      <div class="description">
+        This work was carried out collectively by all the members of Ahad Youth.
+        Our aim was to illuminate the exterior of the mosque, and many people
+        participated in it, including small children. The work continued late
+        into the night, until 1 or 2 a.m
+      </div>
+    </div>
+    <div class="before">
+      <h1>Before</h1>
+    </div>
+    <div class="after">
+      <h1>After</h1>
+    </div>
+  </body>
+</html>
