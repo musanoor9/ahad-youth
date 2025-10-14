@@ -28,7 +28,7 @@
         width: 320px;
         text-align: center;
         transition: transform 0.3s ease;
-        margin-bottom: 1px;
+        display: block;
       }
 
       .profile-card:hover {
@@ -87,10 +87,51 @@
       }
     </style>
   </head>
-
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f8f9fa;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 60%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      background-color: white;
+    }
+    td,
+    th {
+      border: 1px solid #888;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #28a745;
+      color: white;
+    }
+    #preview {
+      width: 300px;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
   <body>
     <div class="profile-card">
-      <img src="memebers img/SAIF BHAI.jpg" alt="Ali Raza" />
+      <img src="memebers img/SAIF BHAI.jpg" alt="vaseel" />
       <h1>Mohammed Muzammil Ahmed</h1>
       <a href="index.html" class="back-btn">← Back to Home</a>
     </div>
@@ -119,6 +160,112 @@
         tempore deleniti eveniet harum quas exercitationem amet aperiam est vel
       </p>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
   </body>
+  <h2>Upload Screenshot to Extract & Save Data</h2>
+  <input type="file" id="imageInput" accept="image/*" /><br />
+  <img id="preview" src="" alt="Preview" />
+
+  <table id="resultTable" style="display: none">
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+    <tr>
+      <td>Transaction</td>
+      <td id="transaction"></td>
+    </tr>
+    <tr>
+      <td>Date & Time</td>
+      <td id="datetime"></td>
+    </tr>
+    <tr>
+      <td>Paid To</td>
+      <td id="paidto"></td>
+    </tr>
+    <tr>
+      <td>UPI ID</td>
+      <td id="upi"></td>
+    </tr>
+    <tr>
+      <td>Amount</td>
+      <td id="amount"></td>
+    </tr>
+  </table>
+
+  <button id="clearData" style="display: none">Clear Saved Data</button>
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const preview = document.getElementById("preview");
+    const table = document.getElementById("resultTable");
+    const clearBtn = document.getElementById("clearData");
+
+    // Restore saved data on page load
+    window.onload = () => {
+      const savedData = JSON.parse(localStorage.getItem("transactionData"));
+      if (savedData) {
+        document.getElementById("transaction").innerText =
+          savedData.transaction;
+        document.getElementById("datetime").innerText = savedData.datetime;
+        document.getElementById("paidto").innerText = savedData.paidto;
+        document.getElementById("upi").innerText = savedData.upi;
+        document.getElementById("amount").innerText = savedData.amount;
+        table.style.display = "table";
+        clearBtn.style.display = "inline-block";
+      }
+    };
+
+    imageInput.addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+
+      // Wait 10 seconds before extracting (for effect)
+      await new Promise((r) => setTimeout(r, 10000));
+
+      // OCR extract
+      const {
+        data: { text },
+      } = await Tesseract.recognize(file, "eng");
+      console.log(text);
+
+      const transaction = text.match(/Transaction\s+Successful/i)
+        ? "Transaction Successful"
+        : "Not found";
+      const datetime =
+        text.match(
+          /\d{2}:\d{2}\s*(?:am|pm)\s*on\s*\d{2}\s*\w+\s*\d{4}/i
+        )?.[0] || "Not found";
+      const paidto = text.match(/[A-Z]+\s+[A-Z]+/i)?.[0] || "Not found";
+      const upi = text.match(/[A-Z0-9]+@[a-z]+/i)?.[0] || "Not found";
+      const amount = text.match(/₹\s*\d+/)?.[0] || "Not found";
+
+      document.getElementById("transaction").innerText = transaction;
+      document.getElementById("datetime").innerText = datetime;
+      document.getElementById("paidto").innerText = paidto;
+      document.getElementById("upi").innerText = upi;
+      document.getElementById("amount").innerText = amount;
+
+      table.style.display = "table";
+      clearBtn.style.display = "inline-block";
+
+      // Save data to localStorage
+      localStorage.setItem(
+        "transactionData",
+        JSON.stringify({ transaction, datetime, paidto, upi, amount })
+      );
+    });
+
+    clearBtn.addEventListener("click", () => {
+      localStorage.removeItem("transactionData");
+      table.style.display = "none";
+      clearBtn.style.display = "none";
+    });
+  </script>
 </html>
