@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Namaz Timing</title>
+  </head>
+  <body>
+    <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .heading{
+      margin-top: 100px;
+    }
+
+    .heading h1 {
+      font-size: 2rem;
+      text-align: center;
+      color: #00e6e6;
+      letter-spacing: 2px;
+      margin-top: 200px;
+      bottom: 50%;
+    }
+
+    table {
+      margin-top: 100px;
+      width: 90%;
+      max-width: 500px;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.4);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    th {
+      background: rgba(0, 230, 230, 0.3);
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    td[contenteditable="true"] {
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: text;
+      transition: background 0.3s;
+    }
+
+    td[contenteditable="true"]:focus {
+      background-color: rgba(255, 255, 255, 0.3);
+      outline: none;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1rem;
+      background-color: #00e6e6;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #000;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #00cccc;
+    }
+    
+    .uploader {
+      width:100%;
+      max-width:960px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+      margin: 1% 0;
+    }
+
+    .uploader-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .title{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:48px;height:48px;border-radius:8px;
+      background:linear-gradient(45deg,var(--accent),#7c3aed);
+      display:inline-grid;place-items:center;font-weight:700;
+      color:#001;
+      box-shadow:0 6px 18px rgba(12,18,28,0.6);
+    }
+    .title h1{font-size:18px;margin:0}
+    .title p{margin:0;font-size:13px;color:var(--muted)}
+
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .file-input-label{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:8px;
+      background:linear-gradient(90deg,var(--accent),#7c3aed);
+      cursor:pointer;
+      font-weight:600;
+      box-shadow:0 6px 14px rgba(0,0,0,0.45);
+    }
+    input[type=file]{display:none}
+
+    .thumb-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:12px 6px;
+      overflow-x:auto;
+      width:100%;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.04));
+      border:1px dashed rgba(255,255,255,0.03);
+      scroll-behavior:smooth;
+    }
+    .thumb{
+      flex:0 0 auto;
+      width:var(--thumb-size);
+      height:calc(var(--thumb-size) * (1280/720)); /* preserve aspect ~ portrait */
+      border-radius:10px;
+      overflow:hidden;
+      position:relative;
+      background:#06101a;
+      display:inline-grid;
+      place-items:center;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(2,6,23,0.6);
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .thumb .meta {
+      position:absolute;
+      left:6px; bottom:6px;
+      background:rgba(0,0,0,0.45);
+      padding:4px 6px;border-radius:6px;
+      font-size:12px;color:#e6eef6;
+      backdrop-filter:blur(4px);
+    }
+
+    /* modal / fullscreen preview */
+    .modal {
+      position:fixed;
+      inset:0;
+      display:none;
+      background:rgba(3,7,13,0.75);
+      place-items:center;
+      z-index:1200;
+      padding:18px;
+    }
+    .modal.open{display:grid}
+    .modal-content{
+      max-width:100%;
+      max-height:100%;
+      width:calc(90vh * 0.5625); /* keep landscape-ish width if needed */
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+    }
+    .modal-image{
+      max-width:100%;
+      max-height:calc(100vh - 160px);
+      border-radius:10px;
+      box-shadow:0 18px 60px rgba(2,6,23,0.8);
+      background:#000;
+      display:block;
+    }
+    .modal-row{
+      display:flex;
+      gap:8px;
+      margin-top:12px;
+      align-items:center;
+    }
+    .btn {
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,0.06);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+      color:#e6eef6;
+      font-weight:600;
+    }
+    .btn.primary{
+      background:linear-gradient(90deg,var(--accent),#7c3aed);
+      box-shadow:0 8px 22px rgba(7,16,25,0.6);
+    }
+    .btn.danger{
+      background:linear-gradient(90deg,#ef4444,#f97316);
+    }
+    .small{
+      padding:6px 8px;font-size:13px;border-radius:6px;
+    }
+
+    /* small helper */
+    .empty {
+      padding:28px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* responsive */
+    @media (max-width:640px){
+      :root{--thumb-size:120px}
+      .title h1{font-size:16px}
+      .modal-content{width:94vw}
+    }
+  </style>
+</head>
+<body>
+  <div class="heading">
+  <h1>ARP CAMP NAMAZ TIMINGS</h1>
+  </div>
+  <table id="namazTable">
+    <tr>
+      <th>Namaz</th>
+      <th>Azaan</th>
+      <th>Jamat</th>
+    </tr>
+    <tr>
+      <td>FAJAR</td>
+      <td contenteditable="true">05:15 AM</td>
+      <td contenteditable="true">05:45 AM</td>
+    </tr>
+    <tr>
+      <td>ZOHAR</td>
+      <td contenteditable="true">01:15 PM</td>
+      <td contenteditable="true">01:45 PM</td>
+    </tr>
+    <tr>
+      <td>ASAR</td>
+      <td contenteditable="true">04:45 PM</td>
+      <td contenteditable="true">05:00 PM</td>
+    </tr>
+    <tr>
+      <td>MAGHRIB</td>
+      <td contenteditable="true">06:20 PM</td>
+      <td contenteditable="true">06:25 PM</td>
+    </tr>
+    <tr>
+      <td>ISHA</td>
+      <td contenteditable="true">07:45 PM</td>
+      <td contenteditable="true">08:00 PM</td>
+    </tr>
+    <tr>
+      <td>JUMA</td>
+      <td contenteditable="true">12:45 PM</td>
+      <td contenteditable="true">01:30 PM</td>
+    </tr>
+  </table>
+
+  <button onclick="saveTimings()">💾 Save</button>
+
+ <!-- <div class="upload-box">
+    <label for="upload">📷 Upload Image</label>
+    <input type="file" id="upload" accept="image/*" multiple>
+    <button onclick="saveImages()">💾 Save</button>
+  </div>
+
+  <div class="gallery" id="gallery"></div> -->
+
+<button id="authBtn"  class="btn small"  title="Authorize / Login" style="margin: 10% 25%;">🔒 Authorize</button>
+<span id="authBadge" style="margin-left:8px;font-size:13px;color:var(--muted)"></span>
+
+
+
+ <div class="uploader" role="region" aria-label="Image uploader">
+    <div class="uploader-header">
+      <div class="title">
+        <div class="logo">
+        </div>
+        <div>
+          <h1>Upload Image Here</h1>
+          <p>Upload karo — thumbnails row mein aayega. Click → fullscreen. Save / Delete possible. Data localStorage mein rahega.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label class="file-input-label" title="Upload image">
+          Upload Image
+          <input id="fileInput" type="file" accept="image/*" multiple />
+        </label>
+        <button id="clearAll" class="btn small" title="Delete all saved images">Clear All</button>
+      </div>
+    </div>
+
+    <div id="thumbRow" class="thumb-row" aria-live="polite">
+      thumbnails appended here
+    </div> 
+
+    <div id="emptyState" class="empty" style="display:none;">
+      Koi image upload nahi hui. "Upload Image" pe click karke image add karo.
+    </div>
+  </div>
+
+  <!-- fullscreen modal -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <img id="modalImg" class="modal-image" alt="Preview"/>
+      <div class="modal-row">
+        <a id="downloadBtn" class="btn primary small" href="#" download="image.jpg">⬇️ Save / Download</a>
+        <button id="modalDelete" class="btn danger small">🗑️ Delete</button>
+        <button id="modalClose" class="btn small">✖ Close</button>
+      </div>
+    </div>
+  </div> 
+
+
+
+  <script>
+    const table = document.getElementById("namazTable");
+
+    window.onload = () => {
+      const saved = localStorage.getItem("namazTimings");
+      if (saved) table.innerHTML = saved;
+    };
+
+    // Save data
+    function saveTimings() {
+      localStorage.setItem("namazTimings", table.innerHTML);
+      alert("✅ Timings Saved Successfully!");
+    }
+
+  //  const uploadInput = document.getElementById('upload');
+  // const gallery = document.getElementById('gallery');
+
+  // let savedImages = JSON.parse(localStorage.getItem('savedImages') || '[]');
+
+  // function displayImages() {
+  //   gallery.innerHTML = '';
+  //   savedImages.forEach((imgData, index) => {
+  //     const card = document.createElement('div');
+  //     card.classList.add('card');
+  //     card.innerHTML = `
+  //       <img src="${imgData}" alt="Uploaded Image">
+  //       <button class="delete-btn">&times;</button>
+  //     `;
+
+  //     card.querySelector('.delete-btn').addEventListener('click', () => {
+  //       savedImages.splice(index, 1);
+  //       localStorage.setItem('savedImages', JSON.stringify(savedImages));
+  //       displayImages();
+  //     });
+
+  //     gallery.appendChild(card);
+  //   });
+  // }
+
+  
+  // displayImages();
+
+  
+  // uploadInput.addEventListener('change', (event) => {
+  //   const files = Array.from(event.target.files);
+  //   files.forEach(file => {
+  //     const reader = new FileReader();
+  //     reader.onload = function(e) {
+  //       savedImages.push(e.target.result);
+  //       displayImages();
+  //     }
+  //     reader.readAsDataURL(file);
+  //   });
+  //   uploadInput.value = '';
+  // });
+
+  
+  // function saveImages() {
+  //   if(savedImages.length === 0){
+  //     alert('No images to save!');
+  //     return;
+  //   }
+  //   localStorage.setItem('savedImages', JSON.stringify(savedImages));
+  //   alert('Images saved successfully!');
+  // }
+ 
+
+  // const STORAGE_KEY = 'uploadedImages_v1'; 
+
+  //  const fileInput = document.getElementById('fileInput');
+  //   const thumbRow = document.getElementById('thumbRow');
+  //   const emptyState = document.getElementById('emptyState');
+
+  //   const modal = document.getElementById('modal');
+  //   const modalImg = document.getElementById('modalImg');
+  //   const downloadBtn = document.getElementById('downloadBtn');
+  //   const modalDelete = document.getElementById('modalDelete');
+  //   const modalClose = document.getElementById('modalClose');
+  //   const clearAllBtn = document.getElementById('clearAll');
+
+    
+  //   let images = []; 
+
+    
+  //   function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+   
+  //   function loadFromStorage(){
+  //     const raw = localStorage.getItem(STORAGE_KEY);
+  //     if(!raw) return;
+  //     try{
+  //       const parsed = JSON.parse(raw);
+  //       if(Array.isArray(parsed)) images = parsed;
+  //     }catch(e){
+  //       console.error('storage parse error', e);
+  //     }
+  //   }
+
+    
+  //   function saveToStorage(){
+  //     try{
+  //       localStorage.setItem(STORAGE_KEY, JSON.stringify(images));
+  //     }catch(e){
+  //       console.error('save error', e);
+  //     }
+  //   }
+
+    
+  //   function renderThumbnails(){
+  //     thumbRow.innerHTML = '';
+  //     if(images.length === 0){
+  //       emptyState.style.display = 'block';
+  //       return;
+  //     } else {
+  //       emptyState.style.display = 'none';
+  //     }
+
+  //     images.forEach(img => {
+  //       const el = document.createElement('div');
+  //       el.className = 'thumb';
+  //       el.title = img.name || 'Uploaded image';
+  //       el.dataset.id = img.id;
+
+  //       const imageEl = document.createElement('img');
+  //       imageEl.src = img.dataUrl;
+  //       imageEl.alt = img.name || 'Image';
+
+  //       const meta = document.createElement('div');
+  //       meta.className = 'meta';
+  //       const date = new Date(img.timestamp).toLocaleString();
+  //       meta.textContent = date.split(',')[0]; // short date
+
+  //       el.appendChild(imageEl);
+  //       el.appendChild(meta);
+
+  //       el.addEventListener('click', () => openModal(img.id));
+
+  //       thumbRow.appendChild(el);
+  //     });
+
+  //     thumbRow.scrollLeft = thumbRow.scrollWidth;
+  //   }
+
+  //   let currentOpenId = null;
+  //   function openModal(id){
+  //     const img = images.find(x => x.id === id);
+  //     if(!img) return;
+  //     currentOpenId = id;
+  //     modalImg.src = img.dataUrl;
+  //     modalImg.alt = img.name || 'Preview';
+  //     downloadBtn.href = img.dataUrl;
+  //     downloadBtn.download = img.name || `image-${id}.jpg`;
+  //     modal.classList.add('open');
+  //     modal.setAttribute('aria-hidden','false');
+  //   }
+
+  //   function closeModal(){
+  //     modal.classList.remove('open');
+  //     modal.setAttribute('aria-hidden','true');
+  //     currentOpenId = null;
+  //     modalImg.src = '';
+  //   }
+
+  //   function deleteImage(id){
+  //     images = images.filter(x => x.id !== id);
+  //     saveToStorage();
+  //     renderThumbnails();
+  //     closeModal();
+  //   }
+
+  //   function clearAll(){
+  //     if(!confirm('Are you sure? This will remove all saved images from this browser.')) return;
+  //     images = [];
+  //     saveToStorage();
+  //     renderThumbnails();
+  //     closeModal();
+  //   }
+
+  //   fileInput.addEventListener('change', async (ev) => {
+  //     const files = Array.from(ev.target.files || []);
+  //     if(files.length === 0) return;
+  //     for(const file of files){
+  //       if(!file.type.startsWith('image/')) continue;
+  //       try{
+  //         const dataUrl = await fileToDataURLWithResize(file, 720, 1280);
+  //         const entry = {
+  //           id: uid(),
+  //           dataUrl,
+  //           name: file.name,
+  //           timestamp: Date.now()
+  //         };
+  //         images.push(entry);
+  //       }catch(err){
+  //         console.error('file read error', err);
+  //       }
+  //     }
+  //     saveToStorage();
+  //     renderThumbnails();
+  //     fileInput.value = '';
+  //   });
+
+  //   function fileToDataURLWithResize(file, maxW, maxH){
+  //     return new Promise((resolve, reject) => {
+  //       const reader = new FileReader();
+  //       reader.onerror = () => reject(new Error('File read error'));
+  //       reader.onload = () => {
+  //         const img = new Image();
+  //         img.onload = () => {
+  //           let w = img.width, h = img.height;
+  //           const ratio = Math.min(maxW / w, maxH / h, 1); // don't upscale
+  //           w = Math.round(w * ratio);
+  //           h = Math.round(h * ratio);
+
+  //           const canvas = document.createElement('canvas');
+  //           canvas.width = w;
+  //           canvas.height = h;
+  //           const ctx = canvas.getContext('2d');
+  //           ctx.fillStyle = '#000';
+  //           ctx.fillRect(0,0,w,h);
+  //           ctx.drawImage(img, 0,0, w, h);
+  //           const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+  //           resolve(dataUrl);
+  //         };
+  //         img.onerror = () => reject(new Error('Image load error'));
+  //         img.src = reader.result;
+  //       };
+  //       reader.readAsDataURL(file);
+  //     });
+  //   }
+
+  //   modalClose.addEventListener('click', closeModal);
+  //   modal.addEventListener('click', (ev) => {
+  //     if(ev.target === modal) closeModal();
+  //   });
+  //   modalDelete.addEventListener('click', () => {
+  //     if(!currentOpenId) return;
+  //     if(confirm('Delete this image?')) deleteImage(currentOpenId);
+  //   });
+
+  //   clearAllBtn.addEventListener('click', clearAll);
+
+  //   document.addEventListener('keydown', (ev) => {
+  //     if(ev.key === 'Escape') closeModal();
+  //   });
+
+    
+  //   loadFromStorage();
+  //   renderThumbnails();
+   
+
+
+const STORAGE_KEY = 'uploadedImages_v1';
+const AUTH_KEY = 'uploader_auth_v1'; // stores { passwordSet: boolean, pass: string (stored base64), members: [names...] }
+const SESSION_USER_KEY = 'uploader_session_user'; // current session's name
+
+// DOM
+const fileInput = document.getElementById('fileInput');
+const thumbRow = document.getElementById('thumbRow');
+const emptyState = document.getElementById('emptyState');
+
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+const downloadBtn = document.getElementById('downloadBtn');
+const modalDelete = document.getElementById('modalDelete');
+const modalClose = document.getElementById('modalClose');
+const clearAllBtn = document.getElementById('clearAll');
+
+const authBtn = document.getElementById('authBtn');
+const authBadge = document.getElementById('authBadge');
+
+// In-memory list (mirrors localStorage)
+let images = []; // {id, dataUrl, name, timestamp}
+let authState = null; // { passwordSet:bool, pass: base64string, members: [names...] }
+let currentUser = null; // name string if logged in
+let currentOpenId = null;
+
+// Utility: generate id
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+
+// ---------- AUTH HELPERS ----------
+function loadAuth(){
+  try{
+    const raw = localStorage.getItem(AUTH_KEY);
+    if(!raw){
+      authState = { passwordSet: false, pass: null, members: [] };
+      return;
+    }
+    authState = JSON.parse(raw);
+    // ensure fields
+    authState.passwordSet = !!authState.passwordSet;
+    authState.members = Array.isArray(authState.members) ? authState.members : [];
+  }catch(e){
+    console.error('auth load error', e);
+    authState = { passwordSet: false, pass: null, members: [] };
+  }
+}
+
+function saveAuth(){
+  try{
+    localStorage.setItem(AUTH_KEY, JSON.stringify(authState));
+  }catch(e){
+    console.error('auth save error', e);
+  }
+}
+
+// simple encoding for stored password (NOT secure, but ok for local-only gate)
+function encodePass(p){ return btoa(p); }
+function checkPass(p){ return authState.pass && encodePass(p) === authState.pass; }
+
+// session user helpers
+function loadSessionUser(){
+  try{
+    currentUser = sessionStorage.getItem(SESSION_USER_KEY);
+  }catch(e){ currentUser = null; }
+}
+function setSessionUser(name){
+  currentUser = name;
+  try{ sessionStorage.setItem(SESSION_USER_KEY, name); }catch(e){}
+}
+
+// show auth status in UI
+function renderAuthBadge(){
+  if(!authState || !authState.passwordSet){
+    authBadge.textContent = 'Password not set';
+    authBtn.textContent = 'Set Password';
+    setUploadEnabled(false);
+    return;
+  }
+  const count = authState.members.length;
+  if(currentUser){
+    authBadge.textContent = `User: ${currentUser} • Authorized(${count}/11)`;
+    authBtn.textContent = 'Logout';
+    setUploadEnabled(true);
+  }else{
+    authBadge.textContent = `Not logged in • Authorized(${count}/11)`;
+    authBtn.textContent = 'Authorize';
+    setUploadEnabled(false);
+  }
+}
+
+// enable/disable upload & clear buttons depending on auth
+function setUploadEnabled(enabled){
+  // file input label remains visible but input disabled if not authorized
+  fileInput.disabled = !enabled;
+  // visually hide upload by disabling pointer-events on label
+  const label = document.querySelector('.file-input-label');
+  if(label) label.style.pointerEvents = enabled ? 'auto' : 'none';
+  // Clear All should remain hidden unless authorized (we keep it protected)
+  clearAllBtn.disabled = !enabled;
+  clearAllBtn.style.opacity = enabled ? '1' : '0.5';
+}
+
+// authorize flow: set password or login
+authBtn.addEventListener('click', () => {
+  // if no password set -> set it
+  if(!authState.passwordSet){
+    const pass = prompt('Set a single password (share with 11 members):');
+    if(!pass) return alert('Password not set.');
+    authState.passwordSet = true;
+    authState.pass = encodePass(pass);
+    authState.members = []; // empty initially
+    saveAuth();
+    alert('Password saved. Now click Authorize and enter the password to login as a member.');
+    loadSessionUser(); renderAuthBadge();
+    return;
+  }
+
+  // if already logged in -> logout
+  if(currentUser){
+    if(confirm('Logout?')){ sessionStorage.removeItem(SESSION_USER_KEY); currentUser = null; renderAuthBadge(); }
+    return;
+  }
+
+  // login flow: ask password then ask name
+  const pass = prompt('Enter password to authorize:');
+  if(!pass) return;
+  if(!checkPass(pass)){
+    alert('Incorrect password.');
+    return;
+  }
+
+  // password correct -> ask member name
+  const name = prompt('Enter your name (will be recorded among authorized members):');
+  if(!name) return alert('Name required to proceed.');
+  const cleanName = name.trim();
+  if(!cleanName) return alert('Invalid name.');
+
+  // if already in list, allow login; if not, add only if <11
+  if(!authState.members.includes(cleanName)){
+    if(authState.members.length >= 11){
+      alert('Maximum 11 authorized members reached. You cannot be added.');
+      return;
+    }
+    authState.members.push(cleanName);
+    saveAuth();
+    alert(`Welcome, ${cleanName}. You have been added to authorized members.`);
+  }else{
+    alert(`Welcome back, ${cleanName}.`);
+  }
+  setSessionUser(cleanName);
+  renderAuthBadge();
+});
+
+// ---------- STORAGE + THUMBNAILS ----------
+function loadFromStorage(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(!raw) return;
+  try{
+    const parsed = JSON.parse(raw);
+    if(Array.isArray(parsed)) images = parsed;
+  }catch(e){
+    console.error('storage parse error', e);
+  }
+}
+
+function saveToStorage(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(images));
+  }catch(e){
+    console.error('save error', e);
+  }
+}
+
+function renderThumbnails(){
+  thumbRow.innerHTML = '';
+  if(images.length === 0){
+    emptyState.style.display = 'block';
+    return;
+  } else {
+    emptyState.style.display = 'none';
+  }
+
+  images.forEach(img => {
+    const el = document.createElement('div');
+    el.className = 'thumb';
+    el.title = img.name || 'Uploaded image';
+    el.dataset.id = img.id;
+
+    const imageEl = document.createElement('img');
+    imageEl.src = img.dataUrl;
+    imageEl.alt = img.name || 'Image';
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    const date = new Date(img.timestamp).toLocaleString();
+    // include uploader name if available
+    meta.textContent = (img.uploader ? img.uploader + ' • ' : '') + date.split(',')[0];
+
+    el.appendChild(imageEl);
+    el.appendChild(meta);
+
+    // click -> open modal
+    el.addEventListener('click', () => openModal(img.id));
+
+    thumbRow.appendChild(el);
+  });
+
+  // auto-scroll to end (latest)
+  thumbRow.scrollLeft = thumbRow.scrollWidth;
+}
+
+// Open modal with specific image id
+function openModal(id){
+  const img = images.find(x => x.id === id);
+  if(!img) return;
+  currentOpenId = id;
+  modalImg.src = img.dataUrl;
+  modalImg.alt = img.name || 'Preview';
+  downloadBtn.href = img.dataUrl;
+  downloadBtn.download = img.name || `image-${id}.jpg`;
+
+  // Only show delete in modal if currentUser is authorized (in members list)
+  if(currentUser && authState.members.includes(currentUser)){
+    modalDelete.style.display = 'inline-block';
+  }else{
+    modalDelete.style.display = 'none';
+  }
+
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+}
+
+function closeModal(){
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+  currentOpenId = null;
+}
+
+// Delete an image by id (only allowed if authorized)
+function deleteImage(id){
+  if(!currentUser || !authState.members.includes(currentUser)){
+    return alert('You are not authorized to delete images.');
+  }
+  images = images.filter(x => x.id !== id);
+  saveToStorage();
+  renderThumbnails();
+  closeModal();
+}
+
+// Clear all (only if authorized) - keeps confirmation
+function clearAll(){
+  if(!currentUser || !authState.members.includes(currentUser)){
+    return alert('You are not authorized to clear all images.');
+  }
+  if(!confirm('Are you sure? This will remove all saved images from this browser.')) return;
+  images = [];
+  saveToStorage();
+  renderThumbnails();
+  closeModal();
+}
+
+// Handle file input (multiple allowed) - only when authorized
+fileInput.addEventListener('change', async (ev) => {
+  if(!currentUser || !authState.members.includes(currentUser)){
+    alert('Please authorize first to upload.');
+    fileInput.value = '';
+    return;
+  }
+  const files = Array.from(ev.target.files || []);
+  if(files.length === 0) return;
+  for(const file of files){
+    if(!file.type.startsWith('image/')) continue;
+    try{
+      const dataUrl = await fileToDataURLWithResize(file, 1280, 1280);
+      const entry = {
+        id: uid(),
+        dataUrl,
+        name: file.name,
+        timestamp: Date.now(),
+        uploader: currentUser
+      };
+      images.push(entry);
+    }catch(err){
+      console.error('file read error', err);
+    }
+  }
+  saveToStorage();
+  renderThumbnails();
+  fileInput.value = '';
+});
+
+// Convert file -> dataURL and resize to maxWidth/maxHeight keeping aspect ratio
+function fileToDataURLWithResize(file, maxW, maxH){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('File read error'));
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        const ratio = Math.min(maxW / w, maxH / h, 1);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0,0,w,h);
+        ctx.drawImage(img, 0,0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+        resolve(dataUrl);
+      };
+      img.onerror = () => reject(new Error('Image load error'));
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// modal events
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (ev) => {
+  if(ev.target === modal) closeModal();
+});
+modalDelete.addEventListener('click', () => {
+  if(!currentOpenId) return;
+  if(!currentUser || !authState.members.includes(currentUser)){
+    alert('Not authorized to delete this image.');
+    return;
+  }
+  if(confirm('Delete this image?')) deleteImage(currentOpenId);
+});
+
+// clear all
+clearAllBtn.addEventListener('click', clearAll);
+
+// keyboard - Esc to close
+document.addEventListener('keydown', (ev) => {
+  if(ev.key === 'Escape') closeModal();
+});
+
+// init
+loadAuth();
+loadSessionUser();
+loadFromStorage();
+renderAuthBadge();
+renderThumbnails();
+
+
+
+  </script>
+  </body>
+</html>

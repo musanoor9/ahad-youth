@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Program Milad-Un-Nabi</title>
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: #000; 
+        margin: 0;
+        font-family: "Arial", sans-serif;
+      }
+
+      .gallery {
+        text-align: center;
+        padding: 40px 20px;
+      }
+
+      .gallery h1 {
+        color: #00ffc3; 
+        font-size: 32px;
+        margin-bottom: 5px;
+      }
+
+      .gallery .date {
+        color: #ff00fb; 
+        margin-bottom: 30px;
+        font-size: 25px;
+      }
+
+      .gallery-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .gallery-card {
+        width: 300px;
+        border: 1px solid #444; 
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+        background-color: #111; 
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      }
+
+      .gallery-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .gallery-card img:hover {
+        transform: scale(1.05);
+      }
+
+      .gallery-card p {
+        color: #ecf0f1; 
+        margin-top: 10px;
+        font-size: 14px;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95); 
+        z-index: 999;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90%;
+      }
+
+      #full-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .crop-box {
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        width: 60%;
+        height: 60%;
+        border: 2px dashed #f1c40f;
+        pointer-events: none;
+        color: #f1c40f;
+        font-weight: bold;
+        text-align: center;
+        line-height: calc(60%);
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: #fff;
+        font-size: 36px;
+        cursor: pointer;
+      }
+      
+
+
+
+  .chanda-section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.chanda-section h1 {
+  font-size: 36px;
+  color: #00ffc3; 
+  margin-bottom: 10px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: auto;
+  background-color: #1a1a1a; 
+}
+
+table th, table td {
+  padding: 12px 15px;
+  border: 1px solid #444;
+  text-align: center;
+}
+
+table th {
+  background-color: #2c3e50; 
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+table td {
+  color: #ecf0f1;
+}
+
+table tr:nth-child(even) {
+  background-color: rgb(255, 0, 221); 
+}
+
+table tr:hover {
+  background-color: #333;
+}
+
+
+    .container {
+        display: flex;
+        gap: 40px; /* gap between tables */
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 5% 0;
+    }
+
+    .table-box {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        width: 320px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 24px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 8px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #3498db;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    td {
+        background-color: #000000;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #070808;
+    }
+
+    tr:last-child td {
+        font-weight: bold;
+        background-color: #f1c40f;
+        color: #2c3e50;
+    }
+
+    .sno {
+        background-color: #1abc9c;
+        color: #ffffff;
+        text-align: center;
+    }
+    </style>
+
+
+    <section class="gallery">
+      <h1>Milad-un-Nabi Program</h1>
+      <p class="date">05-08-2025</p>
+
+      <div class="gallery-container">
+        <div class="gallery-card">
+          <img src="memebers img/" class="thumbnail" />
+          <p>
+            This Program Is Done By Ahad Youth Members. Click Image To View
+            Bigger.
+          </p>
+        </div>
+
+        <div class="gallery-card">
+          <img src="memebers img/.jpeg" class="thumbnail" />
+          <p>Another picture from the Milad Program with description below.</p>
+        </div>
+
+        <div class="gallery-card">
+          <img src="memebers img/" class="thumbnail" />
+          <p>Yet another image with some description for the program.</p>
+        </div>
+      </div>
+    </section>
+
+    <div id="modal" class="modal">
+      <span class="close">&times;</span>
+      <div class="modal-content">
+        <img id="full-image" src="" alt="Full Image" />
+        <div class="crop-box">Crop Area</div>
+      </div>
+    </div> 
+
+     
+
+
+
+
+
+
+ <section class="chanda-section">
+  <h1>Milad-un-Nabi Chanda</h1>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>S.NO</th>
+          <th>Name of a Person</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>sk salman NRI</td><td>500</td></tr>
+        <tr><td>2</td><td>sameer baig</td><td>500</td></tr>
+        <tr><td>3</td><td>Kashif NRI</td><td>1000</td></tr>
+        <tr><td>4</td><td>Ubed bhai</td><td>500</td></tr>
+        <tr><td>5</td><td>Yousuf bhai</td><td>500</td></tr>
+        <tr><td>6</td><td>Arif khan NRI</td><td>500</td></tr>
+        <tr><td>7</td><td>Irfan Auto</td><td>500</td></tr>
+        <tr><td>8</td><td>Asif khan cent</td><td>500</td></tr>
+        <tr><td>9</td><td>Manzoor bhai kirana</td><td>500</td></tr>
+        <tr><td>10</td><td>Basith bhai</td><td>2000</td></tr>
+        <tr><td>11</td><td>Yaqoob Bhai</td><td>1000</td></tr>
+        <tr><td>12</td><td>Ahmed Khaja bhai</td><td>1000</td></tr>
+        <tr><td>13</td><td>Mehboob Bhai dealer</td><td>1000</td></tr>
+        <tr><td>14</td><td>SK gouse Auto</td><td>500</td></tr>
+        <tr><td>15</td><td>Sk amjad sahab</td><td>500</td></tr>
+        <tr><td>16</td><td>Asif khan bhai Auto</td><td>200</td></tr>
+        <tr><td>17</td><td>Shaikh ali bhai</td><td>500</td></tr>
+        <tr><td>18</td><td>Amer Khan NRI</td><td>500</td></tr>
+        <tr><td>19</td><td>Sujauddin sahab</td><td>200</td></tr>
+        <tr><td>20</td><td>Hasham bhai</td><td>300</td></tr>
+        <tr><td>21</td><td>Bari sahab</td><td>500</td></tr>
+        <tr><td>22</td><td>Chand bhai tailor</td><td>500</td></tr>
+        <tr><td>23</td><td>Sadiq bhai tailor</td><td>500</td></tr>
+        <tr><td>24</td><td>zaheer Bhai</td><td>300</td></tr>
+        <tr><td>25</td><td>Ajju bhai kirana</td><td>500</td></tr>
+        <tr><td>26</td><td>Ahmed sahab bricks</td><td>500</td></tr>
+        <tr><td>27</td><td>Irfan Hussain kirana</td><td>500</td></tr>
+        <tr><td>28</td><td>Altaf Bhai cent</td><td>500</td></tr>
+        <tr><td>29</td><td>Abdul mujahid sahab</td><td>400</td></tr>
+        <tr><td>30</td><td>Mohsin NRI</td><td>1000</td></tr>
+        <tr><td>31</td><td>Fahad khan</td><td>500</td></tr>
+        <tr><td>32</td><td>Saleem sahab mestri</td><td>500</td></tr>
+        <tr><td>33</td><td>Feroz sahab NRI</td><td>500</td></tr>
+        <tr><td>34</td><td>Jaleel sahab</td><td>500</td></tr>
+        <tr><td>35</td><td>Mustaq sahab auto</td><td>1500</td></tr>
+        <tr><td>36</td><td>Unknown</td><td>50</td></tr>
+        <tr><td>37</td><td>Ahmed sahab</td><td>500</td></tr>
+        <tr><td>38</td><td>Mujju bhai Mestri</td><td>300</td></tr>
+        <tr><td>39</td><td>Afroz bhai auto</td><td>500</td></tr>
+        <tr><td>40</td><td>khadar bhai</td><td>500</td></tr>
+        <tr><td>41</td><td>Moqtiyar bhai</td><td>500</td></tr>
+        <tr><td>42</td><td>Sardar sahab</td><td>500</td></tr>
+        <tr><td>43</td><td>Aslam khan</td><td>300</td></tr>
+        <tr><td>44</td><td>Vaseem khan cent</td><td>500</td></tr>
+        <tr><td>45</td><td>Moosa noor</td><td>500</td></tr>
+        <tr><td>46</td><td>Baba bhai auto</td><td>200</td></tr>
+        <tr><td>47</td><td>Abdul qader sahab</td><td>500</td></tr>
+        <tr><td>48</td><td>Abdul Mehmood sahab</td><td>1500</td></tr>
+        <tr><td>49</td><td>Shaboddin sahab</td><td>500</td></tr>
+        <tr><td>50</td><td>Sohel NRI</td><td>300</td></tr>
+        <tr><td>51</td><td>Irshad Bhai</td><td>1000</td></tr>
+        <tr><td>52</td><td>Rafeeq Mestry</td><td>500</td></tr>
+        <tr><td>53</td><td>Irshad Bhai Hotel</td><td>500</td></tr>
+        <tr><td>54</td><td>Arif mechanic</td><td>500</td></tr>
+        <tr><td>55</td><td>Saddam bhai</td><td>500</td></tr>
+        <tr><td>56</td><td>Mohammed vaseel</td><td>500</td></tr>
+        <tr><td>57</td><td>Hidayat sahab</td><td>500</td></tr>
+        <tr><td>58</td><td>Mohammed saif</td><td>500</td></tr>
+        <tr><td>59</td><td>Ashraf sahab</td><td>500</td></tr>
+        <tr><td>60</td><td>Naseer sahab</td><td>200</td></tr>
+        <tr><td>61</td><td>Ashwaq</td><td>200</td></tr>
+        <tr><td>62</td><td>Fayaz kirana</td><td>500</td></tr>
+        <tr><td>63</td><td>Khaleel sahab</td><td>200</td></tr>
+        <tr><td>64</td><td>Rafeeq bhai MSC</td><td>300</td></tr>
+        <tr><td>65</td><td>Akbar bhai</td><td>500</td></tr>
+        <tr><td>66</td><td>Ifteqaar sahab cycle</td><td>200</td></tr>
+        <tr><td>67</td><td>Fasiuddin sahab</td><td>300</td></tr>
+        <tr><td>68</td><td>Ahmed sahab NRI</td><td>500</td></tr>
+        <tr><td>69</td><td>Qateef Sir</td><td>500</td></tr>
+        <tr><td>70</td><td>Pasha bhai bank</td><td>500</td></tr>
+        <tr><td>71</td><td>Mujju bhai Mestry new</td><td>100</td></tr>
+        <tr><td>72</td><td>Avez khan</td><td>500</td></tr>
+        <tr><td>73</td><td>Parvez khan</td><td>500</td></tr>
+        <tr><td>74</td><td>Mudassir</td><td>500</td></tr>
+        <tr><td colspan="2"><strong>Total</strong></td><td><strong>39050</strong></td></tr>
+      </tbody>
+    </table>
+
+    
+  
+    <div class="container">
+
+    <div class="table-box">
+        <h2>First Program Expenses</h2>
+        <table>
+            <tr>
+                <th class="sno">S.No</th>
+                <th>Item</th>
+                <th>Amount (₹)</th>
+            </tr>
+            <tr><td class="sno">1</td><td>Gifts</td><td>7000</td></tr>
+            <tr><td class="sno">2</td><td>Kirana</td><td>3980</td></tr>
+            <tr><td class="sno">3</td><td>Haramasala</td><td>590</td></tr>
+            <tr><td class="sno">4</td><td>Adrak, lisan, pyaaz</td><td>370</td></tr>
+            <tr><td class="sno">5</td><td>Beef</td><td>5970</td></tr>
+            <tr><td class="sno">6</td><td>Lakdi</td><td>700</td></tr>
+            <tr><td class="sno">7</td><td>Water and surf</td><td>150</td></tr>
+            <tr><td class="sno">8</td><td>Kirana</td><td>400</td></tr>
+            <tr><td class="sno">9</td><td>Utensils cleaner</td><td>200</td></tr>
+            <tr><td colspan="2">TOTAL</td><td>19360</td></tr>
+        </table>
+    </div>
+  <div class="table-box">
+        <h2>Second Program Expenses</h2>
+        <table>
+            <tr>
+                <th class="sno">S.No</th>
+                <th>Item</th>
+                <th>Amount (₹)</th>
+            </tr>
+            <tr><td class="sno">1</td><td>Second programme total expenses</td><td>16100</td></tr>
+            <tr><td class="sno">2</td><td>Other expenses</td><td>200</td></tr>
+            <tr><td colspan="2">TOTAL</td><td>35660</td></tr>
+            <tr><td class="sno">3</td><td>Remaining amount</td><td>3390</td></tr>
+            <tr><td class="sno">4</td><td>Return of materials</td><td>800</td></tr>
+            <tr><td colspan="2">TOTAL REMAINING AMOUNT</td><td>4190</td></tr>
+        </table>
+    </div>
+
+       
+
+    <script>
+
+      const model = document.getElementById("model");
+      const fullimage = document.getElementById("full-image");
+      const thumbnails = document.querySelectorAll(".thumbnail");
+      const closeBtn = document.querySelector(".close");
+
+      thumbnails.forEach((img) => {
+        img.addEventListener("click", () => {
+          fullImage.src = img.src;
+          modal.style.display = "flex";
+        });
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) modal.style.display = "none";
+      });
+
+
+    
+
+      if (admin) {
+        document.getElementById("uploadSection").style.display = "block";
+        document.querySelectorAll(".delete-btn").forEach((btn) => {
+          btn.style.display = "block";
+        });
+      }
+
+      
+
+    </script>
+  </body>
+</html>

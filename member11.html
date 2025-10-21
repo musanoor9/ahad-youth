@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shaik Musa Noor</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@v4.1.1/dist/tesseract.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
+        color: white;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .profile-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+        border-radius: 15px;
+        padding: 30px;
+        width: 350px;
+        text-align: center;
+        transition: transform 0.3s ease;
+        margin-top: 100px;
+      }
+
+      .profile-card:hover {
+        transform: scale(1.05);
+      }
+
+      .profile-card img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #00ffcc;
+        box-shadow: 0 0 15px #00ffcc;
+        object-fit: cover;
+      }
+
+      .profile-card h1 {
+        font-size: 22px;
+        margin: 15px 0 5px;
+        color: #00ffcc;
+      }
+
+      .profile-card p {
+        font-size: 15px;
+        color: #ccc;
+      }
+
+      .back-btn {
+        margin-top: 30%;
+        background: #00ffcc;
+        color: #000;
+        padding: 6px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s;
+      }
+
+      .back-btn:hover {
+        background: #00bfa5;
+        color: white;
+      }
+      .member-about p {
+        margin: 5% 2;
+        border: 2px solid green;
+        border-radius: 45px;
+        box-shadow: 0 0 40px rgba(255, 6, 6, 0.8);
+        padding: 2%;
+      }
+      .member-about {
+        margin: 1% 4%;
+      }
+      .member-about h2 {
+        margin-left: 40%;
+        font-size: 50px;
+        color: antiquewhite;
+      }
+.manager h1{
+  margin-bottom: 10%;
+}
+:root{
+  --bg:#f5f5f5;
+  --card-bg:#fff;
+  --accent:#0077cc;
+  --text:#222;
+  --btn-bg:#0077cc;
+  --btn-hover:#005fa3;
+  --delete-btn:#cc0000;
+  --delete-hover:#ff0000;
+  --header-bg:#004080;
+  --row-bg:#e8f0fe;
+  --alt-row-bg:#f1f5fb;
+  --sno-color: #ff00e6; /* S.No color */
+}
+td, th {
+  font-weight: bold; /* Make all table text bold */
+}
+*{
+  margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
+h1{text-align:center;margin-bottom:20px;color:var(--accent);}
+.container{max-width:1200px;margin:1% 0;}
+.upload-section{margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+input[type="file"], input[type="password"]{padding:8px;border-radius:6px;border:1px solid #ccc;flex:1;}
+button{padding:6px 12px;border:none;border-radius:6px;background:var(--btn-bg);color:#fff;cursor:pointer;transition:0.2s;}
+button:hover{background:var(--btn-hover);}
+.image-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.image-card{background:var(--card-bg);padding:5px;border-radius:10px;box-shadow:0 0 5px rgba(0,0,0,0.2);width:120px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:0.3s;position:relative;}
+.image-card img{max-width:100%;max-height:70px;border-radius:6px;}
+.delete-img-btn{position:absolute;top:2px;right:2px;background:var(--delete-btn);color:#fff;border:none;border-radius:4px;padding:2px 4px;font-size:12px;cursor:pointer;}
+.delete-img-btn:hover{background:var(--delete-hover);}
+table{width:100%;border-collapse:collapse;margin-top:10px;background:#fff;box-shadow:0 0 5px rgba(0,0,0,0.1);}
+th,td{border:1px solid #ccc;padding:8px;text-align:left;}
+th{background:var(--header-bg);color:#fff;}
+tbody tr:nth-child(even){background:var(--alt-row-bg);}
+tbody tr:nth-child(odd){background:var(--row-bg);}
+tbody td { color: #222; } /* default cell text color */
+tbody td:first-child { font-weight:bold; color: var(--sno-color); } /* S.No special color */
+.cell-input{width:100%;padding:4px;border-radius:4px;border:1px solid #ccc;}
+.row-actions button{background:var(--delete-btn);color:#fff;padding:4px 8px;border-radius:4px;}
+.row-actions button:hover{background:var(--delete-hover);}
+.buttons{display:flex;gap:10px;margin-top:10px;}
+#modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:0.3s;}
+#modal.open{opacity:1;pointer-events:auto;}
+#modal img{max-width:90%;max-height:90%;border-radius:12px;}
+#modalClose{position:absolute;top:20px;right:20px;color:#fff;font-size:28px;cursor:pointer;}
+
+    </style>
+  </head>
+    <div class="profile-card">
+      <img src="memebers img/musa 8.png" alt="musa" />
+      <h1>Shaik Musa Noor</h1>
+      <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+    <div class="member-about">
+      <h2>Profession</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda,
+        optio quas. Minus sunt repellat, error quos vero quae aspernatur quo
+        beatae atque nam natus, necessitatibus <br />>ulla minima rerum eum
+        sint. Sint eos, nobis animi consectetur molestiae nulla <br />libero
+        aliquid iste voluptatum impedit necessitatibus beatae voluptatibus.
+        Saepe sapiente impedit ex adipisci deserunt accusantium dignissimos
+        maiores voluptatum nemo. Exercitationem iusto saepe aperiam? Eligendi,
+        dolorem, natus, aperiam reprehenderit tempore iure eveniet
+        <br />adipisci placeat asperiores saepe deserunt. Facilis obcaecati
+        autem quod ipsam animi voluptatibus eius quia corporis atque modi sequi
+        soluta qui, mollitia voluptates? Aliquid mollitia asperiores quis
+        accusamus sapiente. Magnam eligendi illo natus<br />
+        quasi, ipsa dolor pariatur cum quod, vitae et, nisi dolorem
+        exercitationem aperiam eos? Totam quas maxime in accusamus nisi
+        eligendi. Quo nam fugiat laudantium tempore inventore, rerum temporibus!
+        Repudiandae iste facilis, officia repellendus laudantium voluptatum quas
+        sunt maxime, voluptatibus, sit suscipit? Explicabo officiis non
+        consequuntur culpa sapiente libero dolor aperiam? Sed porro minus
+        ducimus libero architecto, cum commodi labore accusantium molestiae et
+        tempore deleniti eveniet harum quas exercitationem amet aperiam est vel
+      </p>
+    </div>
+<div class="manager">
+
+<h1>Payment Screenshot Manager</h1>
+</div>
+<div class="container">
+
+  <!-- Password Section -->
+  <div class="upload-section" id="passwordSection">
+    <input type="password" id="passwordInput" placeholder="Enter password">
+    <button id="passwordBtn">Submit</button>
+  </div>
+
+  <!-- Upload & Table Section Hidden Initially -->
+  <div id="protectedSection" style="display:none;">
+
+    <!-- File Upload -->
+    <div class="upload-section" id="uploadSection">
+      <input type="file" id="fileInput" accept="image/*" multiple>
+    </div>
+
+    <!-- Images Grid -->
+    <div class="image-grid" id="imageGrid"></div>
+
+    <!-- Table -->
+    <table id="mainTable">
+      <thead>
+        <tr><th>S.No</th><th>Image</th><th>Date</th><th>Name</th><th>Amount</th><th>Actions</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Table Buttons -->
+    <div class="buttons">
+      <button id="addRowBtn">Add Row</button>
+      <button id="saveBtn">Save</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div id="modal" aria-hidden="true">
+  <span id="modalClose">&times;</span>
+  <img id="modalImg" src="" alt="Fullscreen">
+</div>
+<script>
+const CORRECT_PASSWORD = '1234';
+let passwordEntered = false;
+let store=[];
+const STORAGE_KEY='paymentScreenshotsOfficial';
+
+const passwordSection = document.getElementById('passwordSection');
+const passwordInput = document.getElementById('passwordInput');
+const passwordBtn = document.getElementById('passwordBtn');
+const protectedSection = document.getElementById('protectedSection');
+const fileInput = document.getElementById('fileInput');
+const imageGrid = document.getElementById('imageGrid');
+const tableBody = document.querySelector('#mainTable tbody');
+const addRowBtn = document.getElementById('addRowBtn');
+const saveBtn = document.getElementById('saveBtn');
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modalImg');
+const modalClose = document.getElementById('modalClose');
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
+function saveStore(){localStorage.setItem(STORAGE_KEY,JSON.stringify(store));}
+function loadStore(){const raw=localStorage.getItem(STORAGE_KEY); if(raw){try{store=JSON.parse(raw);}catch(e){store=[];}}}
+
+function render(){
+  // Images
+  imageGrid.innerHTML='';
+  store.forEach((entry,index)=>{
+    const card=document.createElement('div'); card.className='image-card';
+    const img=document.createElement('img'); img.src=entry.dataUrl;
+    img.addEventListener('click',()=>{modalImg.src=entry.dataUrl; modal.classList.add('open'); modal.setAttribute('aria-hidden','false');});
+    card.appendChild(img);
+
+    const delBtn=document.createElement('button'); delBtn.className='delete-img-btn'; delBtn.textContent='X';
+    delBtn.disabled = !passwordEntered;
+    delBtn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      if(passwordEntered && confirm('Delete this image?')){
+        store = store.filter(e2=>e2.id!==entry.id);
+        saveStore(); render();
+      }
+    });
+    card.appendChild(delBtn);
+
+    imageGrid.appendChild(card);
+  });
+
+  // Table
+  tableBody.innerHTML='';
+  store.forEach((entry)=>{
+    entry.rows.forEach((row,rowIndex)=>{
+      const tr=document.createElement('tr');
+      const tdSno=document.createElement('td'); tdSno.textContent=rowIndex+1; tr.appendChild(tdSno);
+      const tdImg=document.createElement('td'); const img=document.createElement('img'); img.src=entry.dataUrl; img.style.width='50px'; img.style.height='40px'; tdImg.appendChild(img); tr.appendChild(tdImg);
+      const tdDate=document.createElement('td'); const inpDate=document.createElement('input'); inpDate.className='cell-input'; inpDate.value=row.date; inpDate.addEventListener('change',()=>{row.date=inpDate.value; saveStore();}); tdDate.appendChild(inpDate); tr.appendChild(tdDate);
+      const tdName=document.createElement('td'); const inpName=document.createElement('input'); inpName.className='cell-input'; inpName.value=row.name; inpName.addEventListener('change',()=>{row.name=inpName.value; saveStore();}); tdName.appendChild(inpName); tr.appendChild(tdName);
+      const tdAmt=document.createElement('td'); const inpAmt=document.createElement('input'); inpAmt.className='cell-input'; inpAmt.value=row.amount; inpAmt.addEventListener('change',()=>{row.amount=inpAmt.value; saveStore();}); tdAmt.appendChild(inpAmt); tr.appendChild(tdAmt);
+      const tdAct=document.createElement('td'); const rowDel=document.createElement('button'); rowDel.textContent='Delete'; rowDel.className='row-actions';
+      rowDel.disabled = !passwordEntered;
+      rowDel.addEventListener('click',()=>{if(passwordEntered){entry.rows.splice(rowIndex,1); saveStore(); render();}});
+      tdAct.appendChild(rowDel); tr.appendChild(tdAct);
+      tableBody.appendChild(tr);
+    });
+  });
+}
+
+// Password check
+passwordBtn.addEventListener('click', ()=>{
+  if(passwordInput.value === CORRECT_PASSWORD){
+    passwordEntered = true;
+    protectedSection.style.display = 'block';
+    passwordSection.style.display = 'none';
+    render();
+    alert('Password correct! You can now upload images and manage table.');
+  } else {
+    alert('Incorrect password!');
+  }
+});
+
+// File upload
+fileInput.addEventListener('change',(ev)=>{
+  const files=Array.from(ev.target.files);
+  files.forEach(f=>{
+    if(!f.type.startsWith('image/')) return;
+    const reader=new FileReader();
+    reader.onload=(e)=>{
+      store.push({id:uid(),dataUrl:e.target.result,rows:[{date:'',name:'',amount:''}]});
+      saveStore(); render();
+    }
+    reader.readAsDataURL(f);
+  });
+  fileInput.value='';
+});
+
+// Add Row
+addRowBtn.addEventListener('click',()=>{
+  store.forEach(entry=>entry.rows.push({date:'',name:'',amount:''}));
+  saveStore(); render();
+});
+
+// Save
+saveBtn.addEventListener('click',()=>{saveStore(); alert('Saved');});
+
+// Modal close
+modalClose.addEventListener('click',()=>{modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');});
+modal.addEventListener('click',(e)=>{if(e.target===modal){modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');}});
+
+loadStore(); render();
+</script>
+  </body>
+</html>
